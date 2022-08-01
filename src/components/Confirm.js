@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+
 import React from "react";
 import data from '../data/products.json'
 
@@ -9,7 +11,7 @@ function Confirm() {
     let email = urlParams.get('email')
     let cart = []
     let cartItems = urlParams.get('cart').split(',')
-    cartItems.map(item => cart.push(data.find(i => i.id === item)))
+    cartItems.map(item => cart.push(data.find(i => i.id == item)))
 
     function cleanCart() {
         localStorage.setItem('ES_items', '[]')

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import data from '../data/products.json'
 
 let cartItems = JSON.parse(localStorage.getItem('ES_items'));
@@ -7,7 +8,9 @@ let cartItems = JSON.parse(localStorage.getItem('ES_items'));
 
 let cart = []
 
-cartItems.map(item => cart.push(data.find(i => i.id === item)))
+cartItems.map(item => cart.push(data.find(i => i.id == item)))
+console.log(cartItems)
+console.log(cart)
 
         
 function Cart() {
@@ -17,7 +20,7 @@ function Cart() {
   }
 
   function removeItem(e) {
-    cart.splice(cart.findIndex(i => i.id === e.target.id), 1)
+    cart.splice(cart.findIndex(i => i.id == e.target.id), 1)
     cartItems = []
     cart.map(item => cartItems.push(item.id))
     localStorage.setItem('ES_items', JSON.stringify(cartItems));
