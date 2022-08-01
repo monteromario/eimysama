@@ -1,5 +1,5 @@
 import data from "../data/products.json";
-const axios = require('axios').default;
+//const axios = require('axios').default;
 
 
 let filteredData = data.filter((i) => i.home === true);

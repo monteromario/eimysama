@@ -7,7 +7,7 @@ let cartItems = JSON.parse(localStorage.getItem('ES_items'));
 
 let cart = []
 
-cartItems.map(item => cart.push(data.find(i => i.id == item)))
+cartItems.map(item => cart.push(data.find(i => i.id === item)))
         
 function Checkout() {
     
