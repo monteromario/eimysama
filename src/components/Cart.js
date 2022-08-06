@@ -1,16 +1,31 @@
 /* eslint-disable eqeqeq */
-import data from '../data/products.json'
-
-let cartItems = JSON.parse(localStorage.getItem('ES_items'));
-        if (!cartItems) {
-          cartItems = []
-        } else {} 
+import React, { useState, useEffect } from 'react';
+const axios = require('axios').default;
 
 let cart = []
+let cartItems
 
-cartItems.map(item => cart.push(data.find(i => i.id == item)))
         
 function Cart() {
+
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getData = () => {
+    axios.get('https://eimysama-api.herokuapp.com/getData')
+    .then((res) => {
+      if (res.data.length === 0) {
+        setData(null)
+      } else {
+        setData(res.data)
+        setCart(res.data)
+        setLoading(false)
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+  }
 
   function cleanCart() {
     localStorage.setItem('ES_items', '[]')
@@ -22,8 +37,27 @@ function Cart() {
     cart.map(item => cartItems.push(item.id))
     localStorage.setItem('ES_items', JSON.stringify(cartItems));
   }
+
+  function setCart(data) {
+    cartItems = JSON.parse(localStorage.getItem('ES_items'));
+        if (!cartItems) {
+          cartItems = []
+        } else {} 
+
+    cartItems.map(item => cart.push(data.find(i => i.id == item)))
+  }
+
+  useEffect(() => {
+    getData()
+}, []);
     
     return (
+      <div>
+    { loading ? <div className="d-flex justify-content-center min-vh-100 m-5">
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div> :
       <div className="min-vh-100">
         <div className="my-4 text-center">
           <i className="fa-solid fa-cart-shopping"></i> Your cart: {cart.length === 1 ? <>{cart.length} item <a className="ml-2 text-danger" href="/cart" onClick={cleanCart}>
@@ -64,6 +98,8 @@ function Cart() {
              : <div className=""> </div>}
              </div>
         </div>
+    }
+    </div>
     );
   }
   

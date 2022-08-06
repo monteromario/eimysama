@@ -1,25 +1,35 @@
-import data from "../data/products.json";
-//const axios = require('axios').default;
+import React, { useState, useEffect } from 'react';
+const axios = require('axios').default;
 
-
-let filteredData = data.filter((i) => i.home === true);
+let filteredData
 
 function Home() {
-/*
-    axios.get('http://www.mariomontero.es/test/products.json')
-    .then(function (response) {
-        // handle success
-        console.log(response);
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-    .then(function () {
-        // always executed
-    });
-*/
-    function manageCart(e) {
+
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
+const getData = () => {
+  axios.get('https://eimysama-api.herokuapp.com/getData')
+  .then((res) => {
+    if (res.data.length === 0) {
+      setData(null)
+    } else {
+      setData(res.data)
+      setFilteredData(res.data)
+      setLoading(false)
+    }
+  })
+  .catch((e) => {
+    console.log(e);
+  })
+}
+
+function setFilteredData(data) {
+  filteredData = data.filter((i) => i.home === true);
+}
+
+  function manageCart(e) {
     let cart = JSON.parse(localStorage.getItem("ES_items"));
     if (!cart) {
       cart = [];
@@ -29,7 +39,17 @@ function Home() {
     localStorage.setItem("ES_items", JSON.stringify(cart));
   }
 
+  useEffect(() => {
+    getData()
+}, []);
+
   return (
+    <div>
+    { loading ? <div className="d-flex justify-content-center min-vh-100 m-5">
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div> :
     <div>
       <header className="bg-dark py-5">
         <div className="container px-4 px-lg-5 my-5">
@@ -145,6 +165,8 @@ function Home() {
         </div>
       </section>
     </div>
+    } 
+  </div>
   );
 }
 

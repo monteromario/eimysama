@@ -1,19 +1,52 @@
 /* eslint-disable eqeqeq */
 
-import data from '../data/products.json'
-
-let cartItems = JSON.parse(localStorage.getItem('ES_items'));
-        if (!cartItems) {
-          cartItems = []
-        } else {} 
+import React, { useState, useEffect } from 'react';
+const axios = require('axios').default;
 
 let cart = []
-
-cartItems.map(item => cart.push(data.find(i => i.id == item)))
+let cartItems
         
 function Checkout() {
     
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+  
+    const getData = () => {
+      axios.get('https://eimysama-api.herokuapp.com/getData')
+      .then((res) => {
+        if (res.data.length === 0) {
+          setData(null)
+        } else {
+          setData(res.data)
+          setCart(res.data)
+          setLoading(false)
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+    }
+
+    function setCart(data) {
+        cartItems = JSON.parse(localStorage.getItem('ES_items'));
+            if (!cartItems) {
+              cartItems = []
+            } else {} 
+    
+        cartItems.map(item => cart.push(data.find(i => i.id == item)))
+      }
+    
+      useEffect(() => {
+        getData()
+    }, []);
+
     return (
+        <div>
+        { loading ? <div className="d-flex justify-content-center min-vh-100 m-5">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div> :
       <div className="min-vh-100">
         <form className="mx-4" autoComplete="on" action="/confirm" method="get">
         <div className="my-4 text-center">
@@ -53,10 +86,9 @@ function Checkout() {
              : <div className=""> </div>}
              </div>
         </form>
-        
-
-
         </div>
+    }
+    </div>
     );
   }
   

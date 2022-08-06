@@ -1,25 +1,49 @@
-import React from "react";
-import data from '../data/products.json'
+import React, { useState, useEffect } from 'react';
+const axios = require('axios').default;
 
 function Shop() {
 
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState()
+
+  let cart = []
+  let cartItems
   let queryString = window.location.search;
   let urlParams = new URLSearchParams(queryString);
   let filter = urlParams.get('filter')
   let search = urlParams.get('search')
-  let filteredData
-  if (filter === 'top') {
-    filteredData = data.filter(i => i.top)
-  } else if (filter === 'new') {
-    filteredData = data.filter(i => i.new)
-  } else if (filter === 'sale') {
-    filteredData = data.filter(i => i.sale)
-  } else if (search) {
-    filteredData = data.filter (i => i.name.toUpperCase().includes(search.toUpperCase()) )
-  } else {
-    filteredData = data
-    filter = null
+
+  function filterData(data) {
+    if (filter === 'top') {
+      setFilteredData(data.filter(i => i.top))
+    } else if (filter === 'new') {
+      setFilteredData(data.filter(i => i.new))
+    } else if (filter === 'sale') {
+      setFilteredData(data.filter(i => i.sale))
+    } else if (search) {
+      setFilteredData(data.filter (i => i.name.toUpperCase().includes(search.toUpperCase()) ))
+    } else {
+      setFilteredData(data)
+      filter = null
+    }
   }
+  
+    const getData = () => {
+      axios.get('https://eimysama-api.herokuapp.com/getData')
+      .then((res) => {
+        if (res.data.length === 0) {
+          setData(null)
+        } else {
+          setData(res.data)
+          filterData(res.data)
+          setLoading(false)
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+    }
   
   function manageCart(e) {
     let cart = JSON.parse(localStorage.getItem('ES_items'));
@@ -30,7 +54,26 @@ function Shop() {
     localStorage.setItem('ES_items', JSON.stringify(cart));
 }
 
+function setCart(data) {
+  cartItems = JSON.parse(localStorage.getItem('ES_items'));
+      if (!cartItems) {
+        cartItems = []
+      } else {} 
+
+  cartItems.map(item => cart.push(data.find(i => i.id == item)))
+}
+
+useEffect(() => {
+  getData()
+}, []);
+
 return (
+  <div>
+    { loading ? <div className="d-flex justify-content-center min-vh-100 m-5">
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div> :
   <div>
     <section className="">
         <div className="container px-4 px-lg-5">
@@ -71,6 +114,8 @@ return (
         </div>
     </section>
   </div>
+}
+    </div>
 );
   }
   
