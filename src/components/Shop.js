@@ -34,7 +34,7 @@ function Shop() {
   }
   
     const getData = () => {
-      axios.get('https://eimysama-api.herokuapp.com/getData')
+      axios.get(process.env.REACT_APP_API_BASE_URL+'/getData')
       .then((res) => {
         if (res.data.length === 0) {
           setData(null)
@@ -96,7 +96,7 @@ return (
                         <div className="badge bg-dark text-white position-absolute">{product.top ? "Top" : ""}</div>
                         <div className="badge bg-success text-white position-absolute">{product.new ? "New" : ""}</div>
                         <div className="badge bg-danger text-white position-absolute">{product.sale ? "Sale" : ""}</div>
-                        <img className="card-img-top" src="https://placeimg.com/640/480/any" alt="..." />
+                        <img className="card-img-top" src={product.pictures[0]} alt="..." />
                         <div className="card-body p-4">
                             <div className="text-center">
                                 <h5 className="fw-bolder">{product.name}</h5>

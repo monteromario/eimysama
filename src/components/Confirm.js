@@ -27,7 +27,7 @@ function Confirm() {
     }
 
     const getData = () => {
-      axios.get('https://eimysama-api.herokuapp.com/getData')
+      axios.get(process.env.REACT_APP_API_BASE_URL+'/getData')
       .then((res) => {
         if (res.data.length === 0) {
           setData(null)
@@ -40,6 +40,10 @@ function Confirm() {
       .catch((e) => {
         console.log(e);
       })
+    }
+
+    function getRandomKey() {
+      return Math.floor(Math.random() * 1000);
     }
 
     useEffect(() => {
@@ -57,7 +61,7 @@ function Confirm() {
         <b><i className="fa-solid fa-check"></i> Thank you!</b>
         <p>We have received your request.</p>
         <p></p>
-        <p>{cart.map(item => <li key={item.id}>{item.name}</li> )}</p>
+        <p>{cart.map(item => <li key={getRandomKey()}>{item.name}</li> )}</p>
         <p>Will will contact you soon on {email} for further details.</p>
         <p></p>
         <p>ありがとうございました</p>

@@ -14,7 +14,7 @@ function Home() {
 
 
 const getData = () => {
-  axios.get('https://eimysama-api.herokuapp.com/getData')
+  axios.get(process.env.REACT_APP_API_BASE_URL+'/getData')
   .then((res) => {
     if (res.data.length === 0) {
       setData(null)
@@ -71,21 +71,21 @@ function setFilteredData(data) {
   </div>
   <div className="carousel-inner">
     <div className="carousel-item active" data-bs-interval="10000">
-      <img src={filteredData[0].picture} className="d-block w-100" alt={filteredData[0].name}  />
+      <img src={filteredData[0].pictures[0]} className="d-block w-100" alt={filteredData[0].name}  />
       <div className="carousel-caption d-none d-md-block">
         <h5>{filteredData[0].name}</h5>
         <p>{filteredData[0].size}</p>
       </div>
     </div>
     <div className="carousel-item" data-bs-interval="2000">
-      <img src={filteredData[1].picture} className="d-block w-100" alt={filteredData[1].name} />
+      <img src={filteredData[1].pictures[0]} className="d-block w-100" alt={filteredData[1].name} />
       <div className="carousel-caption d-none d-md-block">
         <h5>{filteredData[1].name}</h5>
         <p>{filteredData[1].size}</p>
       </div>
     </div>
     <div className="carousel-item">
-      <img src={filteredData[2].picture} className="d-block w-100" alt={filteredData[2].name} />
+      <img src={filteredData[2].pictures[0]} className="d-block w-100" alt={filteredData[2].name} />
       <div className="carousel-caption d-none d-md-block">
         <h5>{filteredData[2].name}</h5>
         <p>{filteredData[2].size}</p>
@@ -119,7 +119,7 @@ function setFilteredData(data) {
                   </div>
                   <img
                     className="card-img-top"
-                    src={product.picture}
+                    src={product.pictures[0]}
                     alt="..."
                   />
                   <div className="card-body p-4">

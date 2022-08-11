@@ -15,7 +15,7 @@ function Cart() {
   const [loading, setLoading] = useState(true);
 
   const getData = () => {
-    axios.get('https://eimysama-api.herokuapp.com/getData')
+    axios.get(process.env.REACT_APP_API_BASE_URL+'/getData')
     .then((res) => {
       if (res.data.length === 0) {
         setData(null)
@@ -50,6 +50,10 @@ function Cart() {
     cartItems.map(item => cart.push(data.find(i => i.id == item)))
   }
 
+  function getRandomKey() {
+    return Math.floor(Math.random() * 1000);
+  }
+
   useEffect(() => {
     getData()
 }, []);
@@ -72,12 +76,12 @@ function Cart() {
         <div className="container px-4 px-lg-5 mt-1">
             <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {cart.map(product => 
-                <div className="col mb-5" id={product.id} key={product.id}>
+                <div className="col mb-5" id={product.id} key={getRandomKey()}>
                     <div className="card h-100">
                         <div className="badge bg-dark text-white position-absolute">{product.top ? "Top" : ""}</div>
                         <div className="badge bg-success text-white position-absolute">{product.new ? "New" : ""}</div>
                         <div className="badge bg-danger text-white position-absolute">{product.sale ? "Sale" : ""}</div>
-                        <img className="card-img-top" src="https://placeimg.com/640/480/any" alt="..." />
+                        <img className="card-img-top" src={product.pictures[0]} alt="..." />
                         <div className="card-body p-4">
                             <div className="text-center">
                                 <h5 className="fw-bolder">{product.name}</h5>
