@@ -102,7 +102,24 @@ function setFilteredData(data) {
   </button>
 </div>
       <section className="py-5">
-        <p className="h1 ml-4">Featured products</p>
+        <p className="ml-4"><span className="h1">Featured products</span>
+        {JSON.parse(localStorage.getItem("ES_items")).length ?
+        <a href="/cart">
+        <span className="ml-5 h5 color--black">
+            <i className="bi-cart-fill me-1"></i>
+            <i className="fa-solid fa-cart-shopping"></i>
+            <small>
+            <span className="badge bg-danger text-white ms-1 rounded-pill align-top">
+              {JSON.parse(localStorage.getItem("ES_items"))
+                ? JSON.parse(localStorage.getItem("ES_items")).length
+                : "0"}
+            </span>
+            </small>
+            </span>
+          </a>
+          : ''
+        }
+        </p>
         <div className="container px-4 px-lg-5 mt-5">
           <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {filteredData.map((product) => (

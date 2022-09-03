@@ -83,11 +83,27 @@ return (
         <div className="container px-4 px-lg-5">
           <div className="sticky-top bg-white pt-3">
             <div className="btn-group mb-3">
-              {!filter ? <a href="/shop" className="btn btn-outline-dark active" aria-current="page">All products</a> : <a href="/shop" className="btn btn-outline-dark" aria-current="page">All products</a>}
+              {!filter ? <a href="/shop" className="btn btn-outline-dark active" aria-current="page">All</a> : <a href="/shop" className="btn btn-outline-dark" aria-current="page">All</a>}
               {filter === 'top' ? <a href="/shop?filter=top" className="btn btn-outline-dark active">Top</a> : <a href="/shop?filter=top" className="btn btn-outline-dark">Top</a>}
               {filter === 'new' ? <a href="/shop?filter=new" className="btn btn-outline-dark active">New</a> : <a href="/shop?filter=new" className="btn btn-outline-dark">New</a>}
               {filter === 'sale' ? <a href="/shop?filter=sale" className="btn btn-outline-dark active">Sales</a> : <a href="/shop?filter=sale" className="btn btn-outline-dark">Sales</a>}
             </div>
+            {JSON.parse(localStorage.getItem("ES_items")).length ?
+        <a href="/cart">
+        <span className="ml-5 h5 color--black">
+            <i className="bi-cart-fill me-1"></i>
+            <i className="fa-solid fa-cart-shopping"></i>
+            <small>
+            <span className="badge bg-danger text-white ms-1 rounded-pill align-top">
+              {JSON.parse(localStorage.getItem("ES_items"))
+                ? JSON.parse(localStorage.getItem("ES_items")).length
+                : "0"}
+            </span>
+            </small>
+            </span>
+          </a>
+          : ''
+        }
           </div>
             <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {filteredData.map(product => 

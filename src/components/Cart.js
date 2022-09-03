@@ -23,6 +23,8 @@ function Cart() {
         setData(res.data)
         setCart(res.data)
         setLoading(false)
+        console.log(data)
+        console.log(cart)
       }
     })
     .catch((e) => {
@@ -71,7 +73,7 @@ function Cart() {
             <i className="fa-solid fa-trash"></i>
           </a><a className="btn btn-success ml-3" href="/checkout">Checkout</a></> : cart.length !== 0 ? <>{cart.length} items <a className="ml-2 text-danger" href="/cart" onClick={cleanCart}>
             <i className="fa-solid fa-trash"></i>
-          </a><a className="btn btn-success ml-3" href="/checkout">Checkout</a></> : <>empty <div className="mt-2"><a className="btn btn-outline-dark" href="/">add items</a></div></>} 
+          </a><a className="btn btn-success ml-3" href="/checkout">Checkout</a></> : <>empty <div className="mt-2"><a className="btn btn-outline-dark" href="/shop">add items</a></div></>} 
         </div>
         <div className="container px-4 px-lg-5 mt-1">
             <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
