@@ -10,6 +10,7 @@ import Cart from './Cart'
 import Checkout from './Checkout'
 import Confirm from './Confirm'
 import Add from './Add'
+import List from './List'
 
 export default function Router() {
   return (
@@ -24,6 +25,7 @@ export default function Router() {
         <Route path="checkout" element={<Checkout />} />
         <Route path="confirm" element={<Confirm />} />
         <Route path="add" element={<Add />} />
+        <Route path="list" element={<List />} />
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Home />} />
       </Routes>

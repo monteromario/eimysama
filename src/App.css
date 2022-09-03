@@ -11259,3 +11259,9 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.img--list {
+  max-width: 40px;
+  max-height: 40px;
+  margin-right: 10px;
+}

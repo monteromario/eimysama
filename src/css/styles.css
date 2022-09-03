@@ -5466,6 +5466,15 @@ textarea.form-control-lg {
   word-wrap: break-word;
 }
 
+.modal--centered {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index: 1000;
+  width: 95%;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -11270,4 +11279,8 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+
+.color--grey {
+  color: #adb5bd;
 }
