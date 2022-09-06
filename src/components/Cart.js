@@ -23,8 +23,6 @@ function Cart() {
         setData(res.data)
         setCart(res.data)
         setLoading(false)
-        console.log(data)
-        console.log(cart)
       }
     })
     .catch((e) => {

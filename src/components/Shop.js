@@ -5,11 +5,15 @@
 import React, { useState, useEffect } from 'react';
 const axios = require('axios').default;
 
+let selectedData;
+
 function Shop() {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [filteredData, setFilteredData] = useState()
+  const [filteredData, setFilteredData] = useState();
+  const [modal, setModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   let cart = []
   let cartItems
@@ -48,6 +52,10 @@ function Shop() {
         console.log(e);
       })
     }
+
+    function setSelectedData(item) {
+      selectedData = filteredData.filter((i) => i.id == item);
+    }
   
   function manageCart(e) {
     let cart = JSON.parse(localStorage.getItem('ES_items'));
@@ -56,6 +64,8 @@ function Shop() {
     } else {}
     cart.push(e.target.id)
     localStorage.setItem('ES_items', JSON.stringify(cart));
+    if (modal) {closeModal()}
+
 }
 
 function setCart(data) {
@@ -65,6 +75,16 @@ function setCart(data) {
       } else {} 
 
   cartItems.map(item => cart.push(data.find(i => i.id == item)))
+}
+
+function openModal(e) {
+  setSelectedId(e.target.id);
+  setSelectedData(e.target.id);
+  setModal(true);
+}
+
+function closeModal() {
+  setModal(false);
 }
 
 useEffect(() => {
@@ -112,7 +132,8 @@ return (
                         <div className="badge bg-dark text-white position-absolute">{product.top ? "Top" : ""}</div>
                         <div className="badge bg-success text-white position-absolute">{product.new ? "New" : ""}</div>
                         <div className="badge bg-danger text-white position-absolute">{product.sale ? "Sale" : ""}</div>
-                        <img className="card-img-top" src={product.pictures[0]} alt="..." />
+                        <img className="card-img-top" src={product.pictures[0]} alt="..." id={product.id}
+                        onClick={openModal}/>
                         <div className="card-body p-4">
                             <div className="text-center">
                                 <h5 className="fw-bolder">{product.name}</h5>
@@ -133,6 +154,123 @@ return (
             </div>
         </div>
     </section>
+    {modal ? (
+            <div className="modal--centered">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">{selectedData[0].name}</h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      onClick={closeModal}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <div
+                      id="detailCarousel"
+                      className="carousel carousel-dark slide"
+                      data-bs-ride="carousel"
+                    >
+                      <div className="carousel-indicators">
+                        <button
+                          type="button"
+                          data-bs-target="#detailCarousel"
+                          data-bs-slide-to="0"
+                          className="active"
+                          aria-current="true"
+                          aria-label="Slide 1"
+                        ></button>
+                        <button
+                          type="button"
+                          data-bs-target="#detailCarousel"
+                          data-bs-slide-to="1"
+                          aria-label="Slide 2"
+                        ></button>
+                        <button
+                          type="button"
+                          data-bs-target="#detailCarousel"
+                          data-bs-slide-to="2"
+                          aria-label="Slide 3"
+                        ></button>
+                      </div>
+                      <div className="carousel-inner">
+                        <div
+                          className="carousel-item active"
+                          data-bs-interval="10000"
+                        >
+                          <img
+                            src={selectedData[0].pictures[0]}
+                            className="d-block w-100"
+                            alt={selectedData[0].name}
+                          />
+                          <div className="carousel-caption d-none d-md-block">
+                          </div>
+                        </div>
+                        <div className="carousel-item" data-bs-interval="2000">
+                          <img
+                            src={selectedData[0].pictures[1]}
+                            className="d-block w-100"
+                            alt={selectedData[0].name}
+                          />
+                          <div className="carousel-caption d-none d-md-block">
+                          </div>
+                        </div>
+                        <div className="carousel-item">
+                          <img
+                            src={selectedData[0].pictures[2]}
+                            className="d-block w-100"
+                            alt={selectedData[0].name}
+                          />
+                          <div className="carousel-caption d-none d-md-block">
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        className="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#detailCarousel"
+                        data-bs-slide="prev"
+                      >
+                        <span
+                          className="carousel-control-prev-icon"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="visually-hidden">Previous</span>
+                      </button>
+                      <button
+                        className="carousel-control-next"
+                        type="button"
+                        data-bs-target="#detailCarousel"
+                        data-bs-slide="next"
+                      >
+                        <span
+                          className="carousel-control-next-icon"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                      id={selectedData[0].id}
+                      onClick={(e) => manageCart(e)}
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
   </div>
 }
     </div>

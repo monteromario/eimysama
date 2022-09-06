@@ -61,6 +61,7 @@ function handleClick(e) {
     setModal(true)
   } if (e.target.name == 'edit') {
     console.log('editing product id: ' + e.target.id)
+    window.location = ('/edit/' + e.target.id)
   } else {}
 }
 

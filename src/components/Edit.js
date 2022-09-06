@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const axios = require('axios').default;
 
-function Add() {
+function Edit() {
   
   const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
@@ -214,4 +214,4 @@ function Add() {
     );
   }
   
-  export default Add;
+  export default Edit;

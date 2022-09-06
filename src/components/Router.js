@@ -11,25 +11,55 @@ import Checkout from './Checkout'
 import Confirm from './Confirm'
 import Add from './Add'
 import List from './List'
+import Edit from './Edit'
+import Login from './Login'
+
+let authenticated = true
 
 export default function Router() {
-  return (
-    <div>
-      <Nav />
-      <Routes>
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="shop/:id" element={<Shop />} />
-        <Route path="shop" element={<Shop />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="confirm" element={<Confirm />} />
-        <Route path="add" element={<Add />} />
-        <Route path="list" element={<List />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
-      <Footer />
-    </div>
-  );
+  if (authenticated) {
+    return (
+      <div>
+        <Nav />
+        <Routes>
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="shop/:id" element={<Shop />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="confirm" element={<Confirm />} />
+          <Route path="add" element={<Add />} />
+          <Route path="list" element={<List />} />
+          <Route path="edit" element={<Edit />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+        <Footer />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <Nav />
+        <Routes>
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="shop/:id" element={<Shop />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="confirm" element={<Confirm />} />
+          <Route path="add" element={<Login />} />
+          <Route path="list" element={<Login />} />
+          <Route path="edit" element={<Login />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+        <Footer />
+      </div>
+    );
+  }
 }
