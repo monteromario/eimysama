@@ -14,9 +14,20 @@ import List from './List'
 import Edit from './Edit'
 import Login from './Login'
 
-let authenticated = true
+let authenticated = false
+
+const checkAuth = () => {
+  if (localStorage.getItem('eimysama_token') === process.env.REACT_APP_PASSWORD) {
+    authenticated = true
+  } else {
+    authenticated = false
+  }
+}
 
 export default function Router() {
+  
+  checkAuth();
+
   if (authenticated) {
     return (
       <div>

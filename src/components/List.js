@@ -96,7 +96,7 @@ function setMessageTimer(text) {
       </div>
     </div> :
     <div>
-    <p className="h3 m-3">Product list <small className="color--grey">({filteredData.length} items)</small></p>
+    <p className="h3 m-3">Product list <small className="color--grey">({filteredData.length} items)</small> <a href="/add"><i className="fa-solid fa-circle-plus ml-3"></i></a></p>
     {message ? <div className="alert alert-success" role="alert">
       {message}
     </div> : ''}

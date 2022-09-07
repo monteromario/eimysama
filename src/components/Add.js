@@ -210,6 +210,7 @@ function Add() {
           </form>
           </div>
         </div>
+            <div  className="text-center"><a href="/list"><span className="badge badge-pill badge-dark m-3">List all items</span></a></div>
       </div>
     );
   }

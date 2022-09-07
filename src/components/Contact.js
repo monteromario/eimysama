@@ -3,8 +3,7 @@ import React from 'react';
 function Contact() {
     
     return (
-      <div className="m-5">
-        
+      <div className="m-5 vh-100">
         <div className="card">
           <h5 className="card-header"><i className="fa-solid fa-address-book"></i> Contact</h5>
           <div className="card-body">
